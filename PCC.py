@@ -7,12 +7,18 @@ class Graph:
     self.Time = 0
     self.path = []
     self.names = {}
+    self.costs = {}
+    self.totalCost = 0
+
 
   #adiciona uma aresta
-  def addEdge(self, u, v, name):
+  def addEdge(self, u, v, name, cost):
       self.graph[u].append(v)
       self.graph[v].append(u)
       self.names[(u,v)] = name
+      self.names[(v,u)] = name
+      self.costs[(v,u)] = cost
+      self.costs[(u,v)] = cost
  
   #remove uma aresta do grafo 
   def rmvEdge(self, u, v):
@@ -48,7 +54,7 @@ class Graph:
       count2 = self.DFSCount(u, visited)
  
       #Recoloca aresta no grafo
-      self.addEdge(u,v)
+      self.addEdge(u,v, self.names[(u,v)], self.costs[(u,v)])
  
       #Se mais nós eram alcançados antes da remoção, temos uma ponte, então a aresta é uma ponte e não pode ser usada
       return False if count1 > count2 else True
@@ -61,6 +67,7 @@ class Graph:
         #verifica se a aresta u,v pode ser usada
         if self.isValidNextEdge(u, v):
           self.path.append(self.names[u,v])
+          self.totalCost += self.costs[u,v]
           self.rmvEdge(u, v)
           self.findPathUtil(v)
  
@@ -76,32 +83,34 @@ class Graph:
 
 def main(): 
   g1 = Graph(4)
-  g1.addEdge(0, 1,'a')
-  g1.addEdge(0, 2,'b')
-  g1.addEdge(1, 2,'c')
-  g1.addEdge(2, 3'd')
+  g1.addEdge(0, 1,'a', 1)
+  g1.addEdge(0, 2,'b', 10)
+  g1.addEdge(1, 2,'c', 3)
+  g1.addEdge(2, 3, 'd', 7)
   g1.findPath()
   print(g1.path)
-  
-'''  
+  print('Custo total: ', g1.totalCost)
+   
   g2 = Graph(3)
-  g2.addEdge(0, 1)
-  g2.addEdge(1, 2)
-  g2.addEdge(2, 0)
+  g2.addEdge(0, 1, 'Rua 1', 1)
+  g2.addEdge(1, 2, 'Rua 2', 1)
+  g2.addEdge(2, 0, 'Rua 3', 1)
   g2.findPath()
   print(g2.path)
+  print('Custo total: ', g2.totalCost)
   
   g3 = Graph (5)
-  g3.addEdge(1, 0)
-  g3.addEdge(0, 2)
-  g3.addEdge(2, 1)
-  g3.addEdge(0, 3)
-  g3.addEdge(3, 4)
-  g3.addEdge(3, 2)
-  g3.addEdge(3, 1)
-  g3.addEdge(2, 4)
+  g3.addEdge(1, 0, 'Rua A', 1)
+  g3.addEdge(0, 2, 'Rua B', 2)
+  g3.addEdge(2, 1, 'Rua C', 3)
+  g3.addEdge(0, 3, 'Rua D', 4)
+  g3.addEdge(3, 4, 'Rua E', 5)
+  g3.addEdge(3, 2, 'Rua F', 6)
+  g3.addEdge(3, 1, 'Rua G', 7)
+  g3.addEdge(2, 4, 'Rua H', 8)
   g3.findPath()
   print(g3.path)
-'''  
+  print('Custo total: ', g3.totalCost)
+
 
 main()
