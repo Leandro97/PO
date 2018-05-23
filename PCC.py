@@ -6,11 +6,13 @@ class Graph:
     self.graph = defaultdict(list) #dicionário que armazena o grafo
     self.Time = 0
     self.path = []
-  
+    self.names = {}
+
   #adiciona uma aresta
-  def addEdge(self,u,v):
+  def addEdge(self, u, v, name):
       self.graph[u].append(v)
       self.graph[v].append(u)
+      self.names[(u,v)] = name
  
   #remove uma aresta do grafo 
   def rmvEdge(self, u, v):
@@ -58,7 +60,7 @@ class Graph:
     for v in self.graph[u]:
         #verifica se a aresta u,v pode ser usada
         if self.isValidNextEdge(u, v):
-          self.path.append((u,v))
+          self.path.append(self.names[u,v])
           self.rmvEdge(u, v)
           self.findPathUtil(v)
  
@@ -74,14 +76,14 @@ class Graph:
 
 def main(): 
   g1 = Graph(4)
-  g1.addEdge(0, 1)
-  g1.addEdge(0, 2)
-  g1.addEdge(1, 2)
-  g1.addEdge(2, 3)
+  g1.addEdge(0, 1,'a')
+  g1.addEdge(0, 2,'b')
+  g1.addEdge(1, 2,'c')
+  g1.addEdge(2, 3'd')
   g1.findPath()
   print(g1.path)
   
-  
+'''  
   g2 = Graph(3)
   g2.addEdge(0, 1)
   g2.addEdge(1, 2)
@@ -100,5 +102,6 @@ def main():
   g3.addEdge(2, 4)
   g3.findPath()
   print(g3.path)
+'''  
 
 main()
