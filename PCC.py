@@ -81,24 +81,29 @@ class Graph:
         break
     self.findPathUtil(u)
 
+  def printResults(self):
+    if(len(self.path) == 0) :
+      print('Não é possível passar por todas as ruas') 
+    else: 
+      print('O caminho é: ', self.path)
+      print('Custo total: ', self.totalCost)
+    print()
+
 def main(): 
   g1 = Graph(4)
   g1.addEdge(0, 1,'a', 1)
   g1.addEdge(0, 2,'b', 10)
-  g1.addEdge(1, 2,'c', 3)
-  g1.addEdge(2, 3, 'd', 7)
+  g1.addEdge(0, 3,'c', 4)
   g1.findPath()
-  print(g1.path)
-  print('Custo total: ', g1.totalCost)
-   
+  g1.printResults()
+
   g2 = Graph(3)
   g2.addEdge(0, 1, 'Rua 1', 1)
   g2.addEdge(1, 2, 'Rua 2', 1)
   g2.addEdge(2, 0, 'Rua 3', 1)
   g2.findPath()
-  print(g2.path)
-  print('Custo total: ', g2.totalCost)
-  
+  g2.printResults()
+
   g3 = Graph (5)
   g3.addEdge(1, 0, 'Rua A', 1)
   g3.addEdge(0, 2, 'Rua B', 2)
@@ -109,8 +114,6 @@ def main():
   g3.addEdge(3, 1, 'Rua G', 7)
   g3.addEdge(2, 4, 'Rua H', 8)
   g3.findPath()
-  print(g3.path)
-  print('Custo total: ', g3.totalCost)
-
+  g3.printResults()
 
 main()
